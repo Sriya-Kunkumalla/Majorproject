@@ -1,0 +1,28 @@
+{%load static%}
+<html>
+<head>
+<title>Crud Operations</title>
+</head>
+<body>
+<form id="f1" action="" method="POST">   
+    {%csrf_token%}
+    <table border="2">
+            
+        {%for x in studentsinfo%}
+         <tr>
+             <td>{{x.item_id}}</td>
+             <td>{{x.item_image}}</td>
+             <td>{{x.item_name}}</td>
+             <td>{{x.item_desc}}</td>
+             <td>{{x.item_cost}}</td>
+            <td>
+                <a href="{% url 'editmenu'  x.item_id%}">Edit</a>
+            </td>
+             
+             </tr>
+         {%endfor%}
+     </table>
+           
+</form>
+</body>
+</html>

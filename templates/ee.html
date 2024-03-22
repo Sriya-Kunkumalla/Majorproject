@@ -1,0 +1,89 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Product Page</title>
+	<style>
+		/* CSS styles for the product page */
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f2f2f2;
+		}
+		.container {
+			margin: 0 auto;
+			max-width: 800px;
+			padding: 20px;
+			background-color: #fff;
+			box-shadow: 0px 0px 10px #ccc;
+		}
+		h1 {
+			font-size: 24px;
+			text-align: center;
+		}
+		.product-image {
+			float: left;
+			margin-right: 20px;
+			width: 200px;
+		}
+		.product-details {
+			overflow: hidden;
+		}
+		.product-name {
+			font-size: 20px;
+			font-weight: bold;
+			margin: 0 0 10px 0;
+		}
+		.product-description {
+			margin-bottom: 20px;
+		}
+		.add-to-cart, .buy-now {
+			display: inline-block;
+			padding: 10px 20px;
+			background-color: #4CAF50;
+			color: #fff;
+			text-decoration: none;
+			border-radius: 5px;
+			margin-right: 10px;
+		}
+		.payment-methods {
+			margin-top: 20px;
+			font-weight: bold;
+		}
+		.payment-methods label {
+			display: block;
+			margin-bottom: 10px;
+			font-weight: normal;
+		}
+		.payment-methods input[type="radio"] {
+			margin-right: 10px;
+		}
+	</style>
+</head>
+<body>
+    <form id="f1" method="post" action="">
+		{% csrf_token %}
+	<div class="container">
+		{% for x in i %}
+		<img src='../media/{{x.item_image}}' width="200px" height="100px"/>
+		<div class="product-details">
+			<h1>{{x.item_name}}</h1>
+			<div>
+				{{x.item_desc}}
+			</div>
+			<div>
+				<a href="{% url 'addtocart' item_id=x.item_id  %}" class="add-to-cart">Add to Cart</a>
+				<a href="{% url 'see_cart' %}" class="buy-now">View Cart</a>
+				<a href="{% url 'menu_user' %}" class="buy-now">Continue Order</a>
+			
+			</div>
+		</div>
+		<!--<div class="payment-methods">
+			<label>Payment Method:</label>
+			<label><input type="radio" name="payment-method" value="credit-card" checked>Credit Card</label>
+			<label><input type="radio" name="payment-method" value="paypal">PayPal</label>
+            <label><input type="radio" name="payment-method" value="cod">cod</label>
+		</div>-->
+		{% endfor %}
+	</div>
+</body>
+</html>

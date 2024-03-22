@@ -1,0 +1,99 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title> HotNCrispy </title>
+    <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	 <link rel="stylesheet" href="{% static 'css/dynamic.css' %}">
+</head>
+<body>
+	<div class="sidebar">
+		<div class="logo-details">
+		  <span class="logo_name">HNC</span>
+		</div>
+		  <ul class="nav-links">
+			<li>
+			  <a href="{% url 'admin_dashboard' %}">
+				<i class='bx bx-grid-alt' ></i>
+				<span class="links_name">Dashboard</span>
+			  </a>
+			</li>
+			<li>
+			  <a href="{% url 'menu_admin' %}">
+				<i class='bx bx-box' ></i>
+				<span class="links_name">Menu</span>
+			  </a>
+			</li>
+			<li>
+			  <a href="{% url 'additem_admin' %}" class="active">
+				<i class='bx bx-box' ></i>
+				<span class="links_name">Additem</span>
+			  </a>
+			</li>
+			<li>
+			  <a href="{% url 'total_admin' %}">
+				<i class='bx bx-book-alt' ></i>
+				<span class="links_name">Total order</span>
+			  </a>
+			</li>
+		  
+			<li>
+			  <a href="{% url 'message_admin' %}">
+				<i class='bx bx-message' ></i>
+				<span class="links_name">Messages</span>
+			  </a>
+			</li>
+			<li class="log_out">
+			  <a href="#">
+				<i class='bx bx-log-out'></i>
+				<span class="links_name">Log out</span>
+			  </a>
+			</li>
+		  </ul>
+	  </div>
+	  <section class="home-section">
+		<nav>
+		  <div class="sidebar-button">
+			<i class='bx bx-menu sidebarBtn'></i>
+			<span class="dashboard">Dashboard</span>
+		  </div>
+		  
+		  <div class="profile-details">
+			<img src="{% static 'img/profile.jpg' %}" alt="">
+			<span class="admin_name">HNC ADMIN </span>
+			<!--<i class='bx bx-chevron-down' ></i>-->
+		  </div>
+		</nav>
+		<br>
+		<br>
+		<br>
+		<br>
+	<form id="f1" method="post" enctype="multipart/form-data">
+		{%csrf_token%}
+		<h2>Product Information Form</h2>
+		<label for="item_name">Item Name:</label>
+		<input type="text" name="item_name" id="item_name" value="{{item.name}}" required>
+		<label for="itemimage">Item Image:</label>
+	<input type="file" name="myfile" id="item_image" value="{{item.image}}" required>
+        	<label for="item_desc">Item Description:</label>
+	<textarea name="item_desc" id="item_desc" rows="5" value="{{item.desc}}" required></textarea>
+	
+	<label for="item_cost">Cost:</label>
+	<input type="number" name="item_cost" id="item_cost" value="{{item.cost}}" required>
+	
+	<!---<label for="item-image">Item Image:</label>
+	<input type="file" name="item-image" id="item-image" accept="image/*" required>-->
+
+	<input type="submit" value="Submit">
+	<div class="form-field">
+		{{status}}
+	  </div>
+	
+</form>
+</body>
+</html>

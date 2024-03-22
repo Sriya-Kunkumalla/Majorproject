@@ -1,0 +1,150 @@
+{%load static%}
+<!DOCTYPE html>
+<!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> Admin Dashboard | CodingLab </title>
+    <link rel="stylesheet" href="{%static 'css/user_dashboard.css' %}">
+    <link rel="stylesheet" href="{%static 'css/style.css' %}">
+    <link href="{%static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+      }
+      h1 {
+        text-align: center;
+        margin-top: 50px;
+      }
+      .profile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        max-width: 500px;
+      }
+      img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin-bottom: 20px;
+      }
+      h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+      }
+      p {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+      }
+    </style>
+   </head>
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+      <h3 class='logo_name'>&nbsp;&nbsp;&nbsp;&nbsp;HNC</h3>
+    </div>
+      <ul class="nav-links">
+        
+        <li>
+          <a href="{% url 'menu_user' %}">
+            <i class='bx bx-box' ></i>
+            <span class="links_name">Menu</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'orders_user' %}">
+            <i class='bx bx-list-ul' ></i>
+            <span class="links_name">Orders</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'messages_user' %}">
+            <i class='bx bx-pie-chart-alt-2' ></i>
+            <span class="links_name">Messages</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'profile' %}" class="active">
+            <i class='bx bx-coin-stack' ></i>
+            <span class="links_name">Profile</span>
+          </a>
+        </li>
+        
+        <li class="log_out">
+          <a href="{% url 'logout' %}">
+            <i class='bx bx-log-out'></i>
+            <span class="links_name">Log out</span>
+          </a>
+        </li>
+      </ul>
+  </div>
+  <section class="home-section">
+    <nav>
+      <div class="sidebar-button">
+        <i class='bx bx-menu sidebarBtn'></i>
+        <span class="dashboard">Dashboard</span>
+      </div>
+      
+      <div class="profile-details">
+        <img src="{% static 'img/profile.jpg' %}" alt="">
+        <span class="links_name">&nbsp;{{uname}}</span>
+      </div>
+    </nav>
+    <br>
+    <br>
+    <br>
+<form id="f1" action="profile" method="POST">
+    {%csrf_token%}  
+  <h1>User Profile</h1>
+    <div class="profile">
+      <img src="{% static 'img/man.png' %}" alt="Profile Picture">
+      <table border="2">
+        <tr>
+      <td>id</td>
+      <td>name</td>
+      <td>Email</td>
+     
+      <td>Address</td>
+      <td>Phone Number</td>
+      </tr>
+    {%for x in profileinfo%}
+    <tr>
+      <td><input type='number' id='id' name='id' value="{{x.id}}" readonly/></td>
+      <td><input type='text' id='name' name='name' value="{{x.name}}"/></td>
+      <td><input type='email' id='email' name='email' value="{{x.email}}" readonly/></td>
+      <td><input type='text' id='address' name='address' value="{{x.address}}"/></td>
+      <td><input type='number' id='phone' name='phonenumber' value="{{x.phonenumber}}"/></td>
+      
+    </tr>
+    {%endfor%}
+
+</table>
+
+<input type="submit" value="Update" />
+</form>
+<script>
+   let sidebar = document.querySelector(".sidebar");
+let sidebarBtn = document.querySelector(".sidebarBtn");
+sidebarBtn.onclick = function() {
+  sidebar.classList.toggle("active");
+  if(sidebar.classList.contains("active")){
+  sidebarBtn.classList.replace("bx-menu" ,"bx-menu-alt-right");
+}else
+  sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+}
+ </script>
+ 
+
+</body>
+</html>

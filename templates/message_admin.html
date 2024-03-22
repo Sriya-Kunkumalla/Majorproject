@@ -1,0 +1,102 @@
+{%load static%}
+<!DOCTYPE html>
+<!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
+<html lang="en" dir="ltr">
+    <meta charset="UTF-8">
+    <title> HotNCrispy </title>
+    <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <form id="f1" action="" method="post">
+    {%csrf_token%}
+  <div class="sidebar">
+    <div class="logo-details">
+      <span class="logo_name">HNC</span>
+    </div>
+      <ul class="nav-links">
+        <li>
+          <a href="{% url 'admin_dashboard' %}">
+            <i class='bx bx-grid-alt' ></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'menu_admin' %}">
+            <i class='bx bx-box' ></i>
+            <span class="links_name">Menu</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'additem_admin' %}">
+            <i class='bx bx-box' ></i>
+            <span class="links_name">Additem</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'total_admin' %}">
+            <i class='bx bx-book-alt' ></i>
+            <span class="links_name">Total order</span>
+          </a>
+        </li>
+        <li>
+            <a href="{% url 'message_admin' %}" class="active">
+            <i class='bx bx-message' ></i>
+            <span class="links_name">Messages</span>
+          </a>
+        </li>
+        <li class="log_out">
+          <a href="{% url 'admin_logout' %}">
+            <i class='bx bx-log-out'></i>
+            <span class="links_name">Log out</span>
+          </a>
+        </li>
+      </ul>
+  </div>
+  <section class="home-section">
+    <nav>
+      <div class="sidebar-button">
+        <i class='bx bx-menu sidebarBtn'></i>
+        <span class="dashboard">Dashboard</span>
+        </div>
+        <div class="profile-details">
+          <img src="{% static 'img/profile.jpg' %}" alt="">
+          <span class="admin_name">HNC ADMIN </span>
+          <!--<i class='bx bx-chevron-down' ></i>-->
+        </div>
+        </nav>
+        <br>
+        <br>
+        <br>
+        <br>
+        <table border="2">
+            <tc>
+                <td>id</td>
+            </tc>
+            <tc>
+                <td>username</td>
+            </tc>
+            <tc>
+                <td>email</td>
+            </tc>
+        
+            <tc>
+                <td>message</td>
+            </tc>
+            {%for x in messageinfo%}
+            <tr>
+            <td>{{x.id}}</td>
+            <td>{{x.username}}</td>
+            <td>{{x.email}}</td>
+            <td>{{x.message}}</td> 
+            </tr>
+            {%endfor%}
+            
+
+        </table>
+        
+        </section>
+        </body>
+        </html>

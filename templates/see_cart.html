@@ -1,0 +1,298 @@
+{%load static%}
+<!DOCTYPE html>
+<!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> Admin Dashboard | HNC </title>
+    <link rel="stylesheet" href="{%static 'css/user_dashboard.css' %}">
+    <link rel="stylesheet" href="{%static 'css/style.css' %}">
+    <link href="{%static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <script>
+      let sidebar = document.querySelector(".sidebar");
+   let sidebarBtn = document.querySelector(".sidebarBtn");
+   sidebarBtn.onclick = function() {
+     sidebar.classList.toggle("active");
+     if(sidebar.classList.contains("active")){
+     sidebarBtn.classList.replace("bx-menu" ,"bx-menu-alt-right");
+   }else
+     sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+   }
+   const addToCartButtons = document.querySelectorAll('.add-to-cart');
+   const cartItemsList = document.querySelector('.cart-items');
+   const totalPrice = document.querySelector('.total-price');
+   
+   let cartItems = [];
+   
+   addToCartButtons.forEach(button => {
+     button.addEventListener('click', addToCartClicked);
+   });
+   
+   function addToCartClicked(event) {
+     const button = event.target;
+     const product = button.parentElement;
+     const productName = product.querySelector('h2').textContent;
+     const productPrice = Number(product.querySelector('p').textContent.replace(/[^0-9.-]+/g,""));
+     addToCart(productName, productPrice);
+   }
+   
+   function addToCart(productName, productPrice) {
+     for (let i = 0; i < cartItems.length; i++) {
+       if (cartItems[i].name === productName) {
+         cartItems[i].quantity++;
+         updateCart();
+         return;
+       }
+     }
+   
+     const item = {
+       name: productName,
+       price: productPrice,
+       quantity: 1
+     };
+   
+     cartItems.push(item);
+     updateCart();
+   }
+   
+   function updateCart() {
+       cartItemsList.innerHTML = '';
+     
+       let total = 0;
+     
+       cartItems.forEach(item => {
+         const li = document.createElement('li');
+         li.textContent = `${item.name} x ${item.quantity} - $${item.price * item.quantity}`;
+         cartItemsList.appendChild(li);
+     
+         total += item.price * item.quantity;
+       });
+     
+       totalPrice.textContent = total.toFixed(2);
+     }
+     function UpdateCart() {
+       cartItemsList.innerHTML = '';
+     
+       let total = 0;
+     
+       cartItems.forEach(item => {
+         const li = document.createElement('li');
+         li.textContent = `${item.name} x ${item.quantity} - $${item.price * item.quantity}`;
+         cartItemsList.appendChild(li);
+     
+         const removeButton = document.createElement('button');
+         removeButton.textContent = 'Remove';
+         removeButton.addEventListener('click', () => {
+           removeItemFromCart(item);
+         });
+         li.appendChild(removeButton);
+     
+         total += item_cost* quantity;
+       });
+     
+       totalPrice.textContent = total.toFixed(2);
+     }
+     
+     function removeItemFromCart(item) {
+       const index = cartItems.indexOf(item);
+       if (index > -1) {
+         cartItems.splice(index, 1);
+         updateCart();
+       }
+     }
+     function confirmRemove() {
+           var del=confirm("Are you sure you want to remove this record?");
+           if (del==true){
+               alert ("record deleted")
+           }
+           else {
+               alert("Record Not Deleted")
+           }
+       }
+       function loadtotal(price, item_id) {          
+               var quantity = document.getElementById(item_id+"_q").value;
+               var total = parseFloat(price) * parseInt(quantity);
+               document.getElementById(price + "_" + item_id + "_total").value = total.toFixed(2);
+               updateTotal();    
+       }
+       function updateTotal() {
+         var total = 0;
+         var inputs = document.querySelectorAll('input[id$="_total"]');
+         for (var i = 0; i < inputs.length; i++) {
+           total += parseFloat(inputs[i].value);
+         }
+         if(total>0){
+         var shippingCharge = 10;
+         var subtotal = total;
+         var grandTotal = subtotal + shippingCharge;
+         document.getElementById('cart_total').innerHTML = '₹' + total.toFixed(2);
+         document.getElementById('cart_shipping').innerHTML = '₹' + shippingCharge.toFixed(2);
+         document.getElementById('cart_grandtotal').innerHTML = '₹' + grandTotal.toFixed(2);
+         }
+       }
+        // Call updateTotal() on page load to initialize the total
+        window.onload = function() {
+         updateTotal();
+       };
+       // Call updateTotal() whenever the number of products or their quantity changes
+       var inputs = document.querySelectorAll('input[id^="item_id"]');
+       for (var i = 0; i < inputs.length; i++) {
+         inputs[i].addEventListener("change", updateTotal);
+       }
+       function finalsubmit(){
+         // alert("final submit");
+           var total = 0;
+           //alert('hi0');
+           var inputs = document.querySelectorAll('input[id$="_total"]');
+           //alert('hiinputs');
+           var item_ids=document.querySelectorAll('input[id$="_pid"]');
+           //alert('hi1');
+           var quantitys=document.querySelectorAll('input[id$="_q"]');
+           //alert('hi2');
+           var stritem_ids='';
+           var strquantitys='';
+           //alert('hi3');
+          // alert("final submit 1");
+          if(inputs.length==0){
+            alert("Your cart is empty");
+          }
+         
+         for (var i = 0; i < inputs.length; i++) {
+          total += parseFloat(inputs[i].value);
+           if(i==0){
+         
+                 stritem_ids=item_ids[i].value;
+                 strquantitys=quantitys[i].value;  
+           }
+           else{
+         
+               stritem_ids=stritem_ids+","+ item_ids[i].value;
+                 strquantitys=strquantitys+","+ quantitys[i].value;
+           }
+         }
+       //  alert("itemids "+stritem_ids);
+        // alert("item quantities"+strquantitys);
+        // alert("total"+total);
+         var final=stritem_ids+"@"+strquantitys+"@"+total;
+         //alert(final);
+         document.getElementById("finalsub").value=final;
+         //alert(document.getElementById("finalsub").value);
+    return true;
+       }
+   
+    </script>
+   </head>
+<body>
+  <form id="f1" method="POST" action="see_cart">
+    {%csrf_token%}
+  <div class="sidebar">
+    <div class="logo-details">
+      <h3 class='logo_name'>&nbsp;&nbsp;&nbsp;&nbsp;HNC</h3>
+    </div>
+      <ul class="nav-links">
+        
+        <li>
+          <a href="{% url 'menu_user' %}">
+            <i class='bx bx-box' ></i>
+            <span class="links_name">Menu</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'orders_user' %}">
+            <i class='bx bx-list-ul' ></i>
+            <span class="links_name">Orders</span>
+          </a>
+        </li>
+        <li>
+            <a href="{% url 'see_cart' %}" class="active">
+              <i class='bx bx-box' ></i>
+              <span class="links_name">Viewcart</span>
+            </a>
+          </li>
+        <li>
+          <a href="{% url 'messages_user' %}">
+            <i class='bx bx-pie-chart-alt-2' ></i>
+            <span class="links_name">Messages</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'updateprofile_user' %}">
+            <i class='bx bx-coin-stack' ></i>
+            <span class="links_name">UpdateProfile</span>
+          </a>
+        </li>
+        <!--<li>
+          <a href="">
+            <i class='bx bx-coin-stack' ></i>
+            <span class="links_name">{{uname}}</span>
+          </a>
+        </li>-->
+      <li class="log_out">
+          <a href="{% url 'logout' %}">
+            <i class='bx bx-log-out'></i>
+            <span class="links_name">Log out</span>
+          </a>
+        </li>
+      </ul>
+  </div>
+  <section class="home-section">
+    <nav>
+      <div class="sidebar-button">
+        <i class='bx bx-menu sidebarBtn'></i>
+        <span class="dashboard">Dashboard</span>
+      </div>
+      
+      <div class="profile-details">
+        <img src="{% static 'img/profile.jpg' %}" alt="">
+<!--<span class="admin_name">Prem Shahi</span>-->
+        <!--<i class='bx bx-coin-stack' ></i>-->
+        <span class="links_name">&nbsp;{{uname}}</span>
+      </div>
+    </nav>  
+    <br>
+    <br>
+    <br>
+    <br> 
+    <table style="width:100%" border="3">
+      <tr>                
+        <th>item_id</th>
+        <th>item_image</th>
+        <th>item_name</th>
+        <!--<th width="50%">item_desc</th>-->
+        <th>item_cost</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Action</th>
+      </tr>
+      
+      {%for aa in itemsinfo %}
+      <tr>
+      <td>{{aa.item_id}}</td>
+      <td><a href=""><img src='media/{{aa.item_image}}' width="50px" height="50px"/></a> </td>
+      <td>{{aa.item_name}}</td>
+      <!--<td>{{x.item_desc}}</td>-->
+      <td>{{aa.item_cost}}</td>
+      <td>
+        <input type="text" id="{{aa.item_id}}_pid" value="{{aa.item_id}}" style="display:none"/>
+        <input type="number" id="{{aa.item_id}}_q" name="{{aa.item_id}}_q" onchange="loadtotal('{{aa.item_cost}}', '{{aa.item_id}}')"></td>
+      <td>
+        <input type="text" id="{{aa.item_cost}}_{{aa.item_id}}_total" name="{{aa.item_id}}_total" value="{{aa.item_cost}}" readonly>   
+      </td>
+      <td><a class="btn btn-danger btn-xs" href="{% url 'removeitem' aa.item_id %}">Remove
+        <span class="glyphicon glyphicon-trash"></span></a></td>
+     {%endfor%}
+    </tr>
+    
+</table>
+<input type="text" style="display:none;" id="finalsub" name="finalsub"/>
+<input type="submit" onclick="return finalsubmit()" value="Checkout" />                     
+</section>
+ 
+ </form>
+</body>
+</html>

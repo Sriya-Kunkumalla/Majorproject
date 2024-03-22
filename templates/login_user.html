@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Login Page with Background Image Example</title>
+  <link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="bg" style="  background-image: url('static/img/home.jpg')" ></div>
+<form id="f1" action="login_user" method="post">
+    {%csrf_token%}
+  <div class="form-field" style="  background-image: url('static/img/user-icon.jpeg')">
+  
+    <input type="text" name="uname" placeholder="Username" required/>
+  </div>
+  
+  <div class="form-field" style="  background-image: url('static/img/lockicon.jpeg');">
+    <input type="password" name ="u_password" placeholder="Password" required/>
+  </div>
+
+  <div>
+    <a href="{% url 'forget_password' %}" style="color:turquoise;">Forgot Password?</a>
+    <a class="right" href="{% url 'registration' %}" style="color:turquoise;">Create Account</a>
+  </div>
+  <br>
+
+  <div>
+    <a class="center" href="{% url 'login_admin' %}" style="color:turquoise;">Admin</a>
+  </div>
+  <br>
+  <br>
+  
+  <div class="form-field">
+    <button class="btn" type="submit">Log in</button>
+  </div>
+  <div class="form-field" style="color:rgba(11, 10, 13, 0.947); font-size: 25px;">
+   &nbsp;&nbsp;&nbsp;&nbsp; {{status}}
+  </div>
+
+  
+</form>
+<!-- partial -->
+  
+</body>
+</html>

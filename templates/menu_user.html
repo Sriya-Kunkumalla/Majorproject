@@ -1,0 +1,121 @@
+{%load static%}
+<!DOCTYPE html>
+<!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> Admin Dashboard | HNC </title>
+    <link rel="stylesheet" href="{%static 'css/user_dashboard.css' %}">
+    <link rel="stylesheet" href="{%static 'css/style.css' %}">
+    <link href="{%static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <form id="f1" method="post">
+    {%csrf_token%}
+  <div class="sidebar">
+    <div class="logo-details">
+      <h3 class='logo_name'>&nbsp;&nbsp;&nbsp;&nbsp;HNC</h3>
+    </div>
+      <ul class="nav-links">
+        
+        <li>
+          <a href="{% url 'menu_user' %}" class="active">
+            <i class='bx bx-box' ></i>
+            <span class="links_name">Menu</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'orders_user' %}">
+            <i class='bx bx-list-ul' ></i>
+            <span class="links_name">Orders</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'see_cart' %}">
+            <i class='bx bx-coin-stack' ></i>
+            <span class="links_name">Viewcart</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'messages_user' %}">
+            <i class='bx bx-pie-chart-alt-2' ></i>
+            <span class="links_name">Messages</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'updateprofile_user' %}">
+            <i class='bx bx-coin-stack' ></i>
+            <span class="links_name">UpdateProfile</span>
+          </a>
+        </li>
+        <!--<li>
+          <a href="">
+            <i class='bx bx-coin-stack' ></i>
+            <span class="links_name">{{uname}}</span>
+          </a>
+        </li>-->
+      <li class="log_out">
+          <a href="{% url 'logout' %}">
+            <i class='bx bx-log-out'></i>
+            <span class="links_name">Log out</span>
+          </a>
+        </li>
+      </ul>
+  </div>
+  <section class="home-section">
+    <nav>
+      <div class="sidebar-button">
+        <i class='bx bx-menu sidebarBtn'></i>
+        <span class="dashboard">Dashboard</span>
+      </div>
+     
+      <div class="profile-details">
+        <img src="{% static 'img/profile.jpg' %}" alt="">
+<!--<span class="admin_name">Prem Shahi</span>-->
+        <!--<i class='bx bx-coin-stack' ></i>-->
+        <span class="links_name">&nbsp;{{uname}}</span>
+      </div>
+    </nav>  
+    <br>
+    <br>
+    <br>
+    <br> 
+    <table style="width:100%" border="3">
+      <tr>                
+        <th>item_id</th>
+        <th>item_image</th>
+        <th>item_name</th>
+        <th width="50%">item_desc</th>
+        <th>item_cost</th>
+      </tr>
+      {%for x in itemsinfo%}
+      <tr>
+      <td>{{x.item_id}}</td>
+      <td><a href="{% url 'ee' item_id=x.item_id %}"><img src='media/{{x.item_image}}' width="50px" height="50px"/></a> </td>
+      <td>{{x.item_name}}</td>
+      <td>{{x.item_desc}}</td>
+      <td>{{x.item_cost}}</td></tr>
+      {%endfor%}
+  
+  
+</table>                         
+  </section>
+  <script>
+   let sidebar = document.querySelector(".sidebar");
+let sidebarBtn = document.querySelector(".sidebarBtn");
+sidebarBtn.onclick = function() {
+  sidebar.classList.toggle("active");
+  if(sidebar.classList.contains("active")){
+  sidebarBtn.classList.replace("bx-menu" ,"bx-menu-alt-right");
+}else
+  sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+}
+ </script>
+ </form>
+</body>
+</html>
